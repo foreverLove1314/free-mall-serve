@@ -1,0 +1,10 @@
+.logo {
+  width: 200px;
+  height: 98px;
+  display: inline-block;
+  background: url("../../img/mistore_logo.png") no-repeat;
+}
+.loginForm {
+  min-height: 556px;
+  background-color: #cccccc;
+}
