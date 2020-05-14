@@ -4,7 +4,14 @@
   display: inline-block;
   background: url("../../img/mistore_logo.png") no-repeat;
 }
-.loginForm {
-  min-height: 556px;
-  background-color: #cccccc;
+.loginTab {
+  font-size: 24px;
+}
+.register {
+  color: #fe8c00;
+  text-decoration: none;
+}
+.forgetAccount{
+  color: #fe8c00;
+  text-decoration: none;
 }
