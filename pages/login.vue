@@ -113,6 +113,6 @@ export default {
 };
 </script>
 
-<style scoped>
-@import url("@/assets/css/login/login.css");
+<style lang="scss">
+@import url("@/assets/css/login/login.scss");
 </style>
