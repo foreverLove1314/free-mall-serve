@@ -4,6 +4,9 @@
   display: inline-block;
   background: url("../../img/mistore_logo.png") no-repeat;
 }
+.aboutAccount{
+  margin-top: 20px;
+}
 .loginTab {
   font-size: 24px;
 }

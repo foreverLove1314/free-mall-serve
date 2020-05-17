@@ -42,7 +42,7 @@
                   @click="login('ruleForm')"
                   >登录</el-button
                 >
-                <p>
+                <p class="aboutAccount">
                   还没有账号？
                   <a href="/register" class="register">免费注册</a> |
                   <a href="/ResetAccount" class="forgetAccount">忘记账号？</a>
@@ -120,6 +120,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import url("@/assets/css/login/login.scss");
+<style scoped>
+@import url("@/assets/css/login/login.css");
 </style>

@@ -1,0 +1,19 @@
+.logo {
+  width: 200px;
+  height: 98px;
+  display: inline-block;
+  background: url("../../img/mistore_logo.png") no-repeat;
+}
+.aboutAccount {
+  margin-top: 20px;
+}
+.registerTab {
+  font-size: 24px;
+}
+.register {
+  color: #fe8c00;
+  text-decoration: none;
+}
+.noCode {
+  float: right;
+}
