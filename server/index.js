@@ -1,13 +1,42 @@
 import Koa from "koa";
 import consola from "consola";
 import { Nuxt, Builder } from "nuxt";
-
+//Mongoose为模型提供了一种直接的，基于scheme结构去定义你的数据模型。
+import mongoose from "mongoose";
+//A body parser for koa, based on co-body. support json, form and text type body.
+import bodyParse from "koa-bodyparser";
+//支持Sentinel和集群的Koa会话中间件/缓存的Redis存储
+import Redis from "koa-redis";
+//用于koa的通用会话中间件，易于与自定义存储（如redis或mongo）一起使用，支持defer session getter
+import session from "koa-generic-session";
+import json from "koa-json";
+import dbConfig from "./dbs/config.js";
 const app = new Koa();
+
+app.keys = ["mt", "keyskeys"];
+app.proxy = true;
+app.use(
+  session({
+    key: "mt",
+    prefix: "mt:uid",
+    store: new Redis()
+  })
+);
+app.use(
+  bodyParse({
+    extendTypes: ["json", "form", "text"]
+  })
+);
+app.use(json());
 
 // Import and Set Nuxt.js options
 import config from "../nuxt.config";
 config.dev = app.env !== "production";
 
+mongoose.connect(dbConfig.dbs, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 async function start() {
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config);
