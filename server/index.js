@@ -11,6 +11,7 @@ import Redis from "koa-redis";
 import session from "koa-generic-session";
 import json from "koa-json";
 import dbConfig from "./dbs/config.js";
+import register from "./interface/register";
 const app = new Koa();
 
 app.keys = ["mt", "keyskeys"];
@@ -47,6 +48,7 @@ async function start() {
   } = nuxt.options.server;
 
   await nuxt.ready();
+  app.use(register.routes()).use(register.allowedMethods());
   // Build in development
   if (config.dev) {
     const builder = new Builder(nuxt);
