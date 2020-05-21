@@ -26,15 +26,6 @@
                 <el-input v-model="ruleForm.phoneAccount"
                           autocomplete="off"
                           placeholder="手机"></el-input>
-                <el-button size="mini"
-                           round
-                           @click="sendPhoneMsg">发送验证码</el-button>
-                <span class="status">{{ phoneStatusMsg }}</span>
-              </el-form-item>
-              <el-form-item prop="verificationCode">
-                <el-input v-model="ruleForm.verificationCode"
-                          autocomplete="off"
-                          placeholder="请输入验证码"></el-input>
               </el-form-item>
               <el-form-item prop="password">
                 <el-input type="password"
@@ -47,6 +38,15 @@
                           v-model="ruleForm.rePassword"
                           autocomplete="off"
                           placeholder="确认密码"></el-input>
+              </el-form-item>
+              <el-form-item prop="verificationCode">
+                <el-input v-model="ruleForm.verificationCode"
+                          autocomplete="off"
+                          placeholder="请输入验证码"></el-input>
+                <el-button size="mini"
+                           round
+                           @click="sendPhoneMsg">发送验证码</el-button>
+                <span class="status">{{ phoneStatusMsg }}</span>
               </el-form-item>
               <el-form-item>
                 <el-button type="danger"
@@ -75,15 +75,6 @@
                 <el-input v-model="ruleForm.emailAccount"
                           autocomplete="off"
                           placeholder="邮箱"></el-input>
-                <el-button size="mini"
-                           round
-                           @click="sendEmailMsg">发送验证码</el-button>
-                <span class="status">{{ emailStatusMsg }}</span>
-              </el-form-item>
-              <el-form-item prop="verificationCode">
-                <el-input v-model="ruleForm.verificationCode"
-                          autocomplete="off"
-                          placeholder="请输入验证码"></el-input>
               </el-form-item>
               <el-form-item prop="password">
                 <el-input type="password"
@@ -96,6 +87,15 @@
                           v-model="ruleForm.rePassword"
                           autocomplete="off"
                           placeholder="确认密码"></el-input>
+              </el-form-item>
+              <el-form-item prop="verificationCode">
+                <el-input v-model="ruleForm.verificationCode"
+                          autocomplete="off"
+                          placeholder="请输入验证码"></el-input>
+                <el-button size="mini"
+                           round
+                           @click="sendEmailMsg">发送验证码</el-button>
+                <span class="status">{{ emailStatusMsg }}</span>
               </el-form-item>
               <el-form-item>
                 <el-button type="danger"
