@@ -6399,6 +6399,11 @@ node-sass@^4.14.1:
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
+nodemailer@^6.4.6:
+  version "6.4.6"
+  resolved "https://registry.npm.taobao.org/nodemailer/download/nodemailer-6.4.6.tgz#d37f504f6560b36616f646a606894fe18819107f"
+  integrity sha1-039QT2Vgs2YW9kamBolP4YgZEH8=
+
 nodemon@^1.18.9:
   version "1.19.4"
   resolved "http://r.cnpmjs.org/nodemon/download/nodemon-1.19.4.tgz#56db5c607408e0fdf8920d2b444819af1aae0971"
@@ -6833,12 +6838,19 @@ pascalcase@^0.1.1:
   resolved "http://r.cnpmjs.org/pascalcase/download/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
+passport-local@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/passport-local/download/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
+  integrity sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4=
+  dependencies:
+    passport-strategy "1.x.x"
+
 passport-strategy@1.x.x:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/passport-strategy/download/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
   integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
 
-passport@^0.4.0:
+passport@^0.4.0, passport@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npm.taobao.org/passport/download/passport-0.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpassport%2Fdownload%2Fpassport-0.4.1.tgz#941446a21cb92fc688d97a0861c38ce9f738f270"
   integrity sha1-lBRGohy5L8aI2XoIYcOM6fc48nA=

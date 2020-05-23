@@ -22,6 +22,11 @@
                      :rules="rules"
                      ref="phoneForm"
                      class="demo-ruleForm">
+              <el-form-item prop="nickname">
+                <el-input v-model="ruleForm.nickname"
+                          autocomplete="off"
+                          placeholder="昵称"></el-input>
+              </el-form-item>
               <el-form-item prop="phoneAccount">
                 <el-input v-model="ruleForm.phoneAccount"
                           autocomplete="off"
@@ -71,6 +76,11 @@
                      :rules="rules"
                      ref="emailForm"
                      class="demo-ruleForm">
+              <el-form-item prop="nickname">
+                <el-input v-model="ruleForm.nickname"
+                          autocomplete="off"
+                          placeholder="昵称"></el-input>
+              </el-form-item>
               <el-form-item prop="emailAccount">
                 <el-input v-model="ruleForm.emailAccount"
                           autocomplete="off"
@@ -116,6 +126,7 @@
 </template>
 
 <script>
+import CryptoJS from "crypto-js";
 export default {
   name: "login",
   data () {
@@ -123,17 +134,27 @@ export default {
       phoneStatusMsg: "",
       emailStatusMsg: "",
       ruleForm: {
+        nickname: "",
         phoneAccount: "",
         emailAccount: "",
         verificationCode: "",
         password: "",
         rePassword: ""
       },
+      phoneCode: "",
+      emailCode: "",
       timerid: "",
       rules: {
+        nickname: [
+          {
+            required: true,
+            trigger: ["blur"],
+            message: "昵称不能为空！"
+          }
+        ],
         phoneAccount: [
           {
-            require: true,
+            required: true,
             trigger: ["blur"],
             validator: (rule, value, callback) => {
               let phone = /^(((13[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[3-8]{1})|(18[0-9]{1})|(19[0-9]{1})|(14[5-7]{1}))+\d{8})$/;
@@ -149,7 +170,7 @@ export default {
         ],
         emailAccount: [
           {
-            require: true,
+            required: true,
             trigger: ["blur"],
             validator: (rule, value, callback) => {
               let email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
@@ -165,7 +186,7 @@ export default {
         ],
         verificationCode: [
           {
-            require: true,
+            required: true,
             trigger: ["blur"],
             validator: (rule, value, callback) => {
               if (value === "") {
@@ -178,7 +199,7 @@ export default {
         ],
         password: [
           {
-            require: true,
+            required: true,
             trigger: ["blur"],
             validator: (rule, value, callback) => {
               if (value === "") {
@@ -191,7 +212,7 @@ export default {
         ],
         rePassword: [
           {
-            require: true,
+            required: true,
             trigger: ["blur"],
             validator: (rule, value, callback) => {
               if (value === "") {
@@ -212,41 +233,70 @@ export default {
       if (this.timerid) {
         return false;
       }
-      this.$refs["phoneForm"].validateField("phoneAccount", (valid) => {
+      this.$refs["phoneForm"].validateField("phoneAccount", valid => {
         if (!valid) {
-          this.$axios.post("/register/registerPhone", {
-            phone: this.ruleForm.phoneAccount
-          }).then(({ status, data }) => {
-            console.log(status, data);
-            if (!status) {
-              this.$message.error('获取失败');
-              return;
-            }
-            let count = 60;
-            this.phoneStatusMsg = `验证码已发送，剩余${--count}s`;
-            this.timerid = setInterval(() => {
-              this.phoneStatusMsg = `验证码已发送，剩余${--count}s`;
-              if (count === 0) {
-                clearInterval(this.timerid)
+          this.$axios
+            .post("/register/getPhoneCode", {
+              username: this.ruleForm.nickname,
+              phone: this.ruleForm.phoneAccount
+            })
+            .then(({ status, data }) => {
+              if (!status) {
+                this.$message.error("获取失败");
+                return;
               }
-            }, 1000);
-            this.$message({
-              showClose: true,
-              message: '验证码：' + data.codeNum,
-              type: 'success',
-              duration: 20000
+              if (data.code === -1) {
+                this.$message.error(data.msg);
+                return;
+              }
+              let count = 60;
+              this.phoneStatusMsg = `验证码已发送，剩余${--count}s`;
+              this.timerid = setInterval(() => {
+                this.phoneStatusMsg = `验证码已发送，剩余${--count}s`;
+                if (count === 0) {
+                  clearInterval(this.timerid);
+                }
+              }, 1000);
+              this.phoneCode = data.codeNum;
+              this.$message({
+                showClose: true,
+                message: "验证码：" + data.codeNum,
+                type: "success",
+                duration: 20000
+              });
             });
-          })
         }
-      })
+      });
     },
-    sendEmailMsg () {
-
-    },
+    sendEmailMsg () { },
     phoneRegister (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$message("submit!");
+          //encodeURIComponent() 函数可把字符串作为 URI 组件进行编码
+          this.$axios
+            .post("/register/signUpPhone", {
+              username: window.encodeURIComponent(this.ruleForm.nickname),
+              phone: this.ruleForm.phoneAccount,
+              code: this.phoneCode,
+              password: CryptoJS.MD5(this.ruleForm.password).toString()
+            })
+            .then(({ status, data }) => {
+              console.log(status, data)
+              if (status === 200) {
+                if (data && data.code === 0) {
+                  location.href = "/login";
+                } else {
+                  this.error = data.msg;
+                  this.$message.error(this.error);
+                }
+              } else {
+                this.error = `服务器出错，错误码:${status}`;
+                this.$message.error(this.error);
+              }
+              setTimeout(() => {
+                this.error = "";
+              }, 1500);
+            });
         } else {
           this.$message.error("error submit!!");
           return false;

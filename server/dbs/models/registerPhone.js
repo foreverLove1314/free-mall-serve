@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 let registerSchema = new Schema({
-  user: {
+  username: {
     type: String,
+    require: true
+  },
+  phone: {
+    type: Number,
     require: true
   },
   password: {
@@ -10,4 +14,4 @@ let registerSchema = new Schema({
     require: true
   }
 });
-export default mongoose.model("register", registerSchema);
+export default mongoose.model("registerPhone", registerSchema);
